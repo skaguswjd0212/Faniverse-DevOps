@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="130dp"
+        android:layout_height="160dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_goods5"
+        android:scaleType="centerCrop"/>
+
+    <RelativeLayout
+        android:layout_width="130dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/product_name"
+            android:text="가격내림) 네\n이마르 탑스 크롬"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:gravity="start"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/bookmark_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_star_filled"
+            android:layout_marginEnd="0dp"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/product_price"
+        android:text="9,000원"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        android:gravity="start" />
+</LinearLayout>

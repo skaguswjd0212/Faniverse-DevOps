@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/joincomplete"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:weightSum="1"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:gravity="center_horizontal"
+        android:text="가입을 축하드립니다"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:textColor="#4F4F4F" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:text="Faniverse에 \n 오신걸 환영합니다!"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="#4F4F4F" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.9" />
+
+    <Button
+        android:id="@+id/btn_joincomplete"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:text="메인화면으로"
+        android:backgroundTint="#c99ad1"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:layout_marginTop="330dp"
+        android:layout_marginBottom="20dp"/>
+
+</LinearLayout>

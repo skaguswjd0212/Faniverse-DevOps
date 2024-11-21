@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/birth"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="마이페이지"
+        android:layout_marginTop="32dp"
+        android:textStyle="bold"
+        android:textColor="#4F4F4F"
+        android:gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/seller_avatar"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_user"
+            android:layout_marginEnd="10dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="고물이날날이"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#4F4F4F"/>
+
+            <TextView
+                android:id="@+id/rating_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5.0 후기 2"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 판매 중인 상품 섹션 -->
+    <TextView
+        android:id="@+id/productsForSaleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="판매 중인 상품"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#4F4F4F"/>
+
+    <!-- 판매 중인 상품 목록은 RecyclerView로 대체 가능 -->
+    <TextView
+        android:id="@+id/productsForSale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="상품 1, 상품 2, 상품 3"
+        android:layout_marginTop="5dp"
+        android:textSize="14sp" />
+
+    <!-- 평균 별점 및 완료한 거래수 섹션 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/averageRatingLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="평균 별점"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#4F4F4F"/>
+
+        <TextView
+            android:id="@+id/averageRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/completedTransactionsLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="완료한 거래수"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#4F4F4F"/>
+
+        <TextView
+            android:id="@+id/completedTransactions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- 받은 후기 섹션 -->
+    <TextView
+        android:id="@+id/reviewsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="받은 후기"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#4F4F4F"/>
+
+    <!-- 받은 후기 목록은 RecyclerView로 대체 가능 -->
+    <TextView
+        android:id="@+id/reviews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="후기 1: 좋은 거래였습니다!\n후기 2: 만족합니다."
+        android:layout_marginTop="5dp"
+        android:textSize="16sp" />
+
+</LinearLayout>

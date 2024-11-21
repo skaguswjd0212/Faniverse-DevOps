@@ -1,0 +1,89 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="-1dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.9" />
+
+    <!-- FrameLayout을 사용하여 이미지와 텍스트를 겹치게 배치 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/rectangle1" />
+
+        <Button
+            android:id="@+id/btn_reservation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="예약중"
+            android:layout_marginTop="-100dp"
+            android:textColor="#000000"
+            android:background="#00ff0000"
+            android:textSize="20dp"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/btn_soldout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-40dp"
+            android:background="#00ff0000"
+            android:padding="10dp"
+            android:text="판매완료"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btn_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="게시글 수정"
+            android:layout_marginTop="25dp"
+            android:textColor="#000000"
+            android:background="#00ff0000"
+            android:textSize="20dp"
+            android:padding="10dp" />
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="삭제"
+            android:layout_marginTop="85dp"
+            android:textColor="#000000"
+            android:background="#00ff0000"
+            android:textSize="20dp"
+            android:padding="10dp" />
+    </FrameLayout>
+
+    <View
+        android:background="#66bdbdbd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <Button
+        android:id="@+id/btn_out"
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_corner"
+        android:text="닫기"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+</LinearLayout>
