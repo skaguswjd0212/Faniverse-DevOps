@@ -43,7 +43,7 @@ public class GeneralProduct extends Product {
         return price;
     }
 
-
+    // 상품 상태 지정
     public void setStatus(GeneralProductStatus status) {
         this.generalProductStatus = status;
     }
