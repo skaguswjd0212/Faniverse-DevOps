@@ -13,7 +13,19 @@ pipeline {
             }
         }
 
-        // 2. Docker 이미지 빌드
+        // 2. 백엔드 빌드 실행 (JAR 파일 생성)
+        stage('Build Backend') {
+            steps {
+                script {
+                    // backend-repo/FaniverseBE 디렉토리로 이동하여 Gradle 빌드 실행
+                    dir('backend-repo/FaniverseBE') {
+                        sh './gradlew clean build'  // Gradle 빌드를 통해 JAR 파일 생성
+                    }
+                }
+            }
+        }
+        
+        // 3. Docker 이미지 빌드
         stage('Build image') {
             steps {
                 script {
@@ -23,7 +35,7 @@ pipeline {
             }
         }
 
-        // 3. Docker 이미지에서 테스트 실행 (빌드한 이미지를 사용하여 Gradle 테스트 실행)
+        // 4. Docker 이미지에서 테스트 실행 (빌드한 이미지를 사용하여 Gradle 테스트 실행)
         stage('Test image') {
             steps {
                 script {
@@ -36,7 +48,7 @@ pipeline {
             }
         }
 
-        // 4. Docker 이미지를 Docker Hub로 푸시
+        // 5. Docker 이미지를 Docker Hub로 푸시
         stage('Push image') {
             steps {
                 script {
