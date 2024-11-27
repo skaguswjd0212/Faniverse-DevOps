@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        // app 변수를 pipeline 전체에서 사용할 수 있도록 설정
+        app = ''
+    }
 
     stages {
         // 1. Git 저장소에서 코드 클론
@@ -9,32 +13,38 @@ pipeline {
             }
         }
 
-        // 2. Docker 이미지 빌드 및 실행
+        // 2. Docker 이미지 빌드
         stage('Build image') {
             steps {
-                // Docker 이미지를 실행하고, 컨테이너를 시작하는 명령어
-                sh 'docker build -t faniverse_backend:latest .'
-                sh 'docker run -d --name fan-container -p 8080:8080 faniverse_backend:latest'
+                script {
+                    // Docker 이미지를 빌드하고, 결과를 app 변수에 할당
+                    app = docker.build("faniverse_backend:latest", "-f backend-repo/FaniverseBE/Dockerfile .")
+                }
             }
         }
 
-        // 3. Docker 이미지에서 테스트 실행 (예시로 컨테이너의 상태를 확인하는 명령어를 사용)
+        // 3. Docker 이미지에서 테스트 실행 (빌드한 이미지를 사용하여 Gradle 테스트 실행)
         stage('Test image') {
             steps {
-                // 예시: 컨테이너가 실행 중인지 확인
-                sh 'docker ps -a'
+                script {
+                    // Docker 컨테이너에서 Gradle로 테스트 실행
+                    docker.image("faniverse_backend:latest").inside {
+                        // Gradle Wrapper를 사용하여 테스트 실행
+                        sh './gradlew test'
+                    }
+                }
             }
         }
 
-        // 4. Docker 이미지를 Docker Hub 또는 다른 레지스트리로 푸시
+        // 4. Docker 이미지를 Docker Hub로 푸시
         stage('Push image') {
             steps {
                 script {
-                    // Docker Hub 레지스트리로 푸시
+                    // Docker Hub에 이미지 푸시
                     docker.withRegistry('https://registry.hub.docker.com', 'yr20211129') {
-                        // 이미지 푸시
-                        sh 'docker tag faniverse_backend:latest yr20211129/faniverse_backend:latest'
-                        sh 'docker push yr20211129/faniverse_backend:latest'
+                        // 이미지를 Docker Hub에 태그하고 푸시
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
                     }
                 }
             }
