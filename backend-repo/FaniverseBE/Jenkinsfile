@@ -1,62 +1,45 @@
 pipeline {
     agent any
-    environment {
-        // app 변수를 pipeline 전체에서 사용할 수 있도록 설정
-        app = ''
-    }
 
     stages {
-        // 1. Git 저장소에서 코드 클론
+        // Git 리포지토리에서 코드를 클론함
         stage('Clone repository') {
             steps {
                 git url: 'https://github.com/20211129/Faniverse-DevOps.git', branch: 'main'
             }
         }
-
-        // 2. 백엔드 빌드 실행 (JAR 파일 생성)
+        
+        // 백엔드 빌드를 수행함
         stage('Build Backend') {
             steps {
-                script {
-                    // backend-repo/FaniverseBE 디렉토리로 이동하여 Gradle 빌드 실행
-                    dir('backend-repo/FaniverseBE') {
-                        sh './gradlew clean build'  // Gradle 빌드를 통해 JAR 파일 생성
-                    }
-                }
+                sh 'cd backend-repo/FaniverseBE && ./gradlew clean build'
             }
         }
-        
-        // 3. Docker 이미지 빌드
-        stage('Build image') {
+
+        // Gradle 빌드 결과물인 JAR 파일을 Docker 빌드 컨텍스트로 복사
+        stage('Copy JAR to Docker Context') {
+            steps {
+                // Gradle 빌드 결과물을 Docker 빌드 경로로 복사
+                sh 'cp backend-repo/FaniverseBE/build/libs/*.jar backend-repo/FaniverseBE'
+            }
+        }
+
+        // Docker 이미지를 빌드
+        stage('Build Docker Image') {
             steps {
                 script {
-                    // Docker 이미지를 빌드하고, 결과를 app 변수에 할당
-                    app = docker.build("faniverse_backend:latest", "-f backend-repo/FaniverseBE/Dockerfile .")
+                    app = docker.build("yr20211129/faniverse_backend:latest", "backend-repo/FaniverseBE")
                 }
             }
         }
 
-        // 4. Docker 이미지에서 테스트 실행 (빌드한 이미지를 사용하여 Gradle 테스트 실행)
-        stage('Test image') {
-            steps {
-                script {
-                    // Docker 컨테이너에서 Gradle로 테스트 실행
-                    docker.image("faniverse_backend:latest").inside {
-                        // Gradle Wrapper를 사용하여 테스트 실행
-                        sh './gradlew test'
-                    }
-                }
-            }
-        }
-
-        // 5. Docker 이미지를 Docker Hub로 푸시
+        // Docker Hub에 로그인 후 이미지 푸시
         stage('Push image') {
             steps {
                 script {
-                    // Docker Hub에 이미지 푸시
                     docker.withRegistry('https://registry.hub.docker.com', 'yr20211129') {
-                        // 이미지를 Docker Hub에 태그하고 푸시
-                        app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
+                        app.push("${env.BUILD_NUMBER}")
                     }
                 }
             }
