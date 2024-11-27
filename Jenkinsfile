@@ -1,10 +1,16 @@
 node {
     def app
-
+	
+    stage('Setup Environment') {
+    echo "Setting up JDK environment for this Pipeline..."
+    env.JAVA_HOME = tool name: 'jdk21', type: 'jdk'
+    env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+    }
+    
     stage('Clone Repository') {
         echo "Cloning repository..."
         git 'https://github.com/skaguswjd0212/Faniverse-DevOps.git' 
-		}
+    }
 		
     stage('Build & Test Docker Image') {
         echo "Building and testing the application..."
