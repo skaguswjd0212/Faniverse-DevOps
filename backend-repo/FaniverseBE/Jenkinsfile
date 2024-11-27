@@ -12,7 +12,15 @@ pipeline {
         // 백엔드 빌드를 수행함
         stage('Build Backend') {
             steps {
-                sh 'cd backend-repo/FaniverseBE && ./gradlew clean build'
+                script {
+                    // gradlew 파일에 실행 권한을 부여
+                    sh 'chmod +x backend-repo/FaniverseBE/gradlew'
+                    
+                    // Gradle 빌드를 실행
+                    dir('backend-repo/FaniverseBE') {
+                        sh './gradlew clean build'
+                    }
+                }
             }
         }
 
@@ -25,7 +33,7 @@ pipeline {
         }
 
         // Docker 이미지를 빌드
-        stage('Build Docker Image') {
+        stage('Build Image') {
             steps {
                 script {
                     app = docker.build("yr20211129/faniverse_backend:latest", "backend-repo/FaniverseBE")
@@ -38,8 +46,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'yr20211129') {
-                        app.push("latest")
                         app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
                     }
                 }
             }
