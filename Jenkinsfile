@@ -15,6 +15,7 @@ node {
     stage('Build & Test Docker Image') {
         echo "Building and testing the application..."
         dir('backend-repo/FaniverseBE') { 
+            sh 'chmod +x gradlew'
             sh './gradlew clean build test'
         }
     }
