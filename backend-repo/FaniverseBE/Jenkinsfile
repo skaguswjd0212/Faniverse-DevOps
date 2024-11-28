@@ -1,25 +1,27 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'jdk17'
+    }
+
+    environment {
+        JAVA_HOME = "${tool 'jdk17'}"
+        PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+    }
+    
     stages {
-        // Git 리포지토리에서 코드를 클론함
         stage('Clone repository') {
             steps {
-                git url: 'https://github.com/20211129/Faniverse-DevOps.git', branch: 'main'
+                git branch: 'main', url: 'https://github.com/20211129/Faniverse-DevOps.git'
             }
         }
-        
-        // 백엔드 빌드를 수행함
+
         stage('Build Backend') {
             steps {
-                script {
-                    // gradlew 파일에 실행 권한을 부여
-                    sh 'chmod +x backend-repo/FaniverseBE/gradlew'
-                    
-                    // Gradle 빌드를 실행
-                    dir('backend-repo/FaniverseBE') {
-                        sh './gradlew clean build'
-                    }
+                dir('backend-repo/FaniverseBE') {
+                    sh 'chmod +x gradlew'
+                    sh './gradlew clean build'
                 }
             }
         }
@@ -32,7 +34,6 @@ pipeline {
             }
         }
 
-        // Docker 이미지를 빌드
         stage('Build Image') {
             steps {
                 script {
@@ -41,7 +42,6 @@ pipeline {
             }
         }
 
-        // Docker Hub에 로그인 후 이미지 푸시
         stage('Push image') {
             steps {
                 script {
