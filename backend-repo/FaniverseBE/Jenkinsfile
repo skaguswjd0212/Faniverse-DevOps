@@ -26,14 +26,6 @@ pipeline {
             }
         }
 
-        // Gradle 빌드 결과물인 JAR 파일을 Docker 빌드 컨텍스트로 복사
-        stage('Copy JAR to Docker Context') {
-            steps {
-                // Gradle 빌드 결과물을 Docker 빌드 경로로 복사
-                sh 'cp backend-repo/FaniverseBE/build/libs/*.jar backend-repo/FaniverseBE'
-            }
-        }
-
         stage('Build Image') {
             steps {
                 script {
