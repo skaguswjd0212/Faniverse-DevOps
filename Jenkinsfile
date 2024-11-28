@@ -9,7 +9,7 @@ node {
     
     stage('Clone Repository') {
         echo "Cloning repository..."
-        git branch: 'hyunjeong', url: git 'https://github.com/skaguswjd0212/Faniverse-DevOps.git' 
+        git branch: 'hyunjeong', url: 'https://github.com/skaguswjd0212/Faniverse-DevOps.git' 
     }
 		
     stage('Build & Test Docker Image') {
