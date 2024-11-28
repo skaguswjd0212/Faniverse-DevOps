@@ -19,7 +19,7 @@ public class GeneralProduct extends Product {
     @Column(name = "price")
     private double price;
 
-    
+    //상품 상태
     @Enumerated(EnumType.STRING)
     @Column(name = "generalProductStatus")
     private GeneralProductStatus generalProductStatus;
