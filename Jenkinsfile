@@ -34,4 +34,16 @@ node {
             app.push("latest")
         }
     }
+	
+    stage('Apply Kubernetes Secrets') {
+	echo "Applying Kubernetes Secrets..."
+        sh 'kubectl apply -f app-secrets.yml'
+        sh 'kubectl apply -f gcp-secrets.yml'
+    }
+	
+    stage('Deploy to Kubernetes') {
+        echo "Deploying to Kubernetes..."
+        sh 'kubectl apply -f k8s/faniverse-backend-deployment.yml'
+	sh 'kubectl apply -f k8s/faniverse-backend-service.yml'
+    }
 }
