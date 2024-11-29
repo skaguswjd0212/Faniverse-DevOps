@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-spring-deployment
+spec:
+  selector:
+    matchLabels:
+      app: devops-spring-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: devops-spring-app
+    spec:
+      containers:
+        - name: faniverse-con
+          image: yr20211129/faniverse_backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1000Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-spring-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: devops-spring-app
