@@ -49,6 +49,17 @@ pipeline {
             }
         }
 
+	stage('Configure GKE credentials') {
+            steps {
+                script {
+                    // GKE 클러스터 인증 설정
+                    sh """
+                        gcloud container clusters get-credentials ${env.CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.PROJECT_ID}
+                    """
+                }
+            }
+        }
+	    
         stage('Deploy to Kubernetes') {
             steps{
                 sh 'kubectl apply -f backend-repo/FaniverseBE/faniverse-secret.yml'
