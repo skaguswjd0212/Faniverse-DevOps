@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/20211129/Faniverse-DevOps.git'
+                git branch: 'yerim', url: 'https://github.com/20211129/Faniverse-DevOps.git'
             }
         }
 
