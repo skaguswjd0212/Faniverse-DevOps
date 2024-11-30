@@ -51,8 +51,8 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps{
-                sh 'kubectl apply -f k8s/faniverse-secret.yml'
-		sh 'kubectl apply -f k8s/deploy.yml'
+                sh 'kubectl apply -f backend-repo/FaniverseBE/faniverse-secret.yml'
+        	sh 'kubectl apply -f backend-repo/FaniverseBE/deploy.yml'
             }
         }
     }
