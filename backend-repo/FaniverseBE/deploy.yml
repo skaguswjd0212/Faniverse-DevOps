@@ -19,6 +19,7 @@ spec:
           ports:
             - containerPort: 8080
               protocol: TCP
+          command: ["/bin/sh", "-ec", "while :; do echo 'Hello World'; sleep 5 ; done"]
           envFrom:
             - secretRef:
                 name: faniverse-secret
