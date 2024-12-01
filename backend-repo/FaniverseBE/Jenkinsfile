@@ -11,13 +11,13 @@ pipeline {
 	PROJECT_ID = 'faniverse'
         CLUSTER_NAME = 'k8s'
         LOCATION = 'asia-northeast3-a'
-        CREDENTIALS_ID = 'gke-1'
+        CREDENTIALS_ID = 'gke'
     }
     
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/20211129/Faniverse-DevOps.git'
+                git branch: 'yerim', url: 'https://github.com/20211129/Faniverse-DevOps.git'
             }
         }
 
@@ -49,13 +49,23 @@ pipeline {
             }
         }
 
-        stage('Deploy to GKE') {
-	    when {
-	        branch 'main'
+	stage('Configure GKE credentials') {
+            steps {
+                script {
+                    // GKE 클러스터 인증 설정
+                    sh """
+                        gcloud container clusters get-credentials ${env.CLUSTER_NAME} --zone ${env.LOCATION} --project ${env.PROJECT_ID}
+                    """
+                }
             }
+        }
+	    
+        stage('Deploy to Kubernetes') {
             steps{
-                sh "sed -i 's/faniverse_backend:latest/hello:${env.BUILD_ID}/g' deploy.yml"
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deploy.yml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+		// 기존 Secret 삭제 후 적용
+            	sh 'kubectl delete secret faniverse-secret || true'
+                sh 'kubectl apply -f backend-repo/FaniverseBE/faniverse-secret.yml'
+        	sh 'kubectl apply -f backend-repo/FaniverseBE/deploy.yml'
             }
         }
     }
