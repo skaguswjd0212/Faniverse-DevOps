@@ -37,8 +37,8 @@ node {
 	
     stage('Apply Kubernetes Secrets') {
 	echo "Applying Kubernetes Secrets..."
-        sh 'kubectl apply -f app-secrets.yml'
-        sh 'kubectl apply -f gcp-secrets.yml'
+        sh 'kubectl apply -f k8s/app-secrets.yml'
+        sh 'kubectl apply -f k8s/gcp-secrets.yml'
     }
 	
     stage('Deploy to Kubernetes') {
