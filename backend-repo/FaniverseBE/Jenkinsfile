@@ -66,6 +66,9 @@ pipeline {
             	sh 'kubectl delete secret faniverse-secret || true'
                 sh 'kubectl apply -f backend-repo/FaniverseBE/faniverse-secret.yml'
         	sh 'kubectl apply -f backend-repo/FaniverseBE/deploy.yml'
+		
+		// 파드 상태 확인
+                sh 'kubectl get pods'
             }
         }
     }
