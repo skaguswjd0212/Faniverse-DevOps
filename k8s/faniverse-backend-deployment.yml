@@ -18,6 +18,10 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+          protocol: TCP
+          
+        //Test
+        command: ["/bin/sh", "-ec", "while :; do echo 'Hello World'; sleep 5 ; done"]
         env:
         - name: SPRING_DATASOURCE_URL
           valueFrom:
