@@ -5,6 +5,10 @@ node {
     echo "Setting up JDK environment for this Pipeline..."
     env.JAVA_HOME = tool name: 'jdk21', type: 'jdk'
     env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+    env.PROJECT_ID = 'shaped-infusion-435600-i6'
+    env.CLUSTER_NAME = 'kube'
+    env.LOCATION = 'asia-northeast3-a'
+    env.CREDENTIALS_ID = 'gke'
     }
     
     stage('Clone Repository') {
@@ -42,8 +46,22 @@ node {
     }
 	
     stage('Deploy to Kubernetes') {
-        echo "Deploying to Kubernetes..."
-        sh 'kubectl apply -f k8s/faniverse-backend-deployment.yml'
-	sh 'kubectl apply -f k8s/faniverse-backend-service.yml'
+        when {
+            branch 'main'
+        }
+        steps {
+            script {
+                sh 'kubectl apply -f k8s/faniverse-backend-deployment.yml'
+	        sh 'kubectl apply -f k8s/faniverse-backend-service.yml'
+                echo "Deploying to Kubernetes..."
+	        step([$class: 'KubernetesEngineBuilder',
+                  projectId: env.PROJECT_ID,
+                  clusterName: env.CLUSTER_NAME,
+                  location: env.LOCATION,
+                  manifestPattern: 'k8s/*.yml',
+                  credentialsId: env.CREDENTIALS_ID,
+                  verifyDeployments: true])
+            }
+        }    
     }
 }
