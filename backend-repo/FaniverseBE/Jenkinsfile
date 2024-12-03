@@ -26,6 +26,7 @@ pipeline {
                 dir('backend-repo/FaniverseBE') {
                     sh 'chmod +x gradlew'
                     sh './gradlew clean build'
+		    sh 'ls -al build/libs' // 빌드 결과 확인
                 }
             }
         }
@@ -34,6 +35,14 @@ pipeline {
             steps {
                 script {
                     app = docker.build("yr20211129/faniverse_backend:latest", "backend-repo/FaniverseBE")
+                }
+            }
+        }
+	    
+	stage('Verify Image Content') {  // 빌드된 Docker 이미지를 실행하고 내부를 확인
+    	    steps {
+                script {
+                    sh 'docker run --rm yr20211129/faniverse_backend:latest ls /app'
                 }
             }
         }
