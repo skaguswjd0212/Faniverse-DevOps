@@ -42,7 +42,14 @@ pipeline {
 	stage('Verify Image Content') {  // 빌드된 Docker 이미지를 실행하고 내부를 확인
     	    steps {
                 script {
-                    sh 'docker run --rm yr20211129/faniverse_backend:latest ls /app'
+                    // Jenkins 환경 변수 사용하여 Docker 컨테이너 실행
+                    sh """
+                        docker run --rm \
+                            -e SPRING_DATASOURCE_URL=${env.SPRING_DATASOURCE_URL} \
+                            -e SPRING_DATASOURCE_USERNAME=${env.SPRING_DATASOURCE_USERNAME} \
+                            -e SPRING_DATASOURCE_PASSWORD=${env.SPRING_DATASOURCE_PASSWORD} \
+                            yr20211129/faniverse_backend:latest ls /app
+                    """
                 }
             }
         }
