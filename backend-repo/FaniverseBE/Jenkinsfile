@@ -45,10 +45,11 @@ pipeline {
                     // Jenkins 환경 변수 사용하여 Docker 컨테이너 실행
                     sh """
                         docker run --rm \
-                            -e SPRING_DATASOURCE_URL=${env.SPRING_DATASOURCE_URL} \
-                            -e SPRING_DATASOURCE_USERNAME=${env.SPRING_DATASOURCE_USERNAME} \
-                            -e SPRING_DATASOURCE_PASSWORD=${env.SPRING_DATASOURCE_PASSWORD} \
-                            yr20211129/faniverse_backend:latest ls /app
+  			    -e SPRING_DATASOURCE_URL=jdbc:mysql://34.134.108.54:3306/faniverseDB?useSSL=false \
+  			    -e SPRING_DATASOURCE_USERNAME=root \
+  			    -e SPRING_DATASOURCE_PASSWORD=sungshin \
+  			    yr20211129/faniverse_backend:latest \
+  			    java -jar /app/app.jar
                     """
                 }
             }
