@@ -45,20 +45,16 @@ pipeline {
         stage('Verify Image Content') {
             steps {
                 script {
-                    // Docker 컨테이너 실행 후 애플리케이션 실행
-                    withCredentials([
-                        string(credentialsId: 'SPRING_DATASOURCE_URL', variable: 'SPRING_DATASOURCE_URL'),
-                        string(credentialsId: 'SPRING_DATASOURCE_USERNAME', variable: 'SPRING_DATASOURCE_USERNAME'),
-                        string(credentialsId: 'SPRING_DATASOURCE_PASSWORD', variable: 'SPRING_DATASOURCE_PASSWORD')
-                    ]) {
-                        sh """
-                            docker run --rm \
-                            -e SPRING_DATASOURCE_URL=\${SPRING_DATASOURCE_URL} \
-                            -e SPRING_DATASOURCE_USERNAME=\${SPRING_DATASOURCE_USERNAME} \
-                            -e SPRING_DATASOURCE_PASSWORD=\${SPRING_DATASOURCE_PASSWORD} \
-                            yr20211129/faniverse_backend:latest java -jar /app/app.jar
-                        """
-                    }
+                    // Spring Boot 애플리케이션을 Docker로 실행하여 확인
+                    sh """
+                        docker run --rm \
+                        -e SPRING_DATASOURCE_URL=\${SPRING_DATASOURCE_URL} \
+                        -e SPRING_DATASOURCE_USERNAME=\${SPRING_DATASOURCE_USERNAME} \
+                        -e SPRING_DATASOURCE_PASSWORD=\${SPRING_DATASOURCE_PASSWORD} \
+                        yr20211129/faniverse_backend:latest java -jar /app/app.jar > result.log 2>&1
+                    """
+                    // 실행 로그 출력
+                    sh 'cat result.log'
                 }
             }
         }
