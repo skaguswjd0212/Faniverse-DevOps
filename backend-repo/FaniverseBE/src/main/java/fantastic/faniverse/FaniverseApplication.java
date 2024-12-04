@@ -11,15 +11,21 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class FaniverseApplication {
 
     public static void main(String[] args) {
-        // 환경 변수를 직접 시스템 속성으로 설정
-        System.setProperty("SPRING_DATASOURCE_URL", System.getenv("SPRING_DATASOURCE_URL"));
-        System.setProperty("SPRING_DATASOURCE_USERNAME", System.getenv("SPRING_DATASOURCE_USERNAME"));
-        System.setProperty("SPRING_DATASOURCE_PASSWORD", System.getenv("SPRING_DATASOURCE_PASSWORD"));
-        System.setProperty("GCP_STORAGE_CREDENTIALS_JSON", System.getenv("GCP_STORAGE_CREDENTIALS_JSON"));
-        System.setProperty("GCP_PROJECT_ID", System.getenv("GCP_PROJECT_ID"));
-        System.setProperty("GCP_BUCKET", System.getenv("GCP_BUCKET"));
+        // 환경 변수에서 값을 읽어 시스템 속성으로 설정
+        setSystemProperty("SPRING_DATASOURCE_URL");
+        setSystemProperty("SPRING_DATASOURCE_USERNAME");
+        setSystemProperty("SPRING_DATASOURCE_PASSWORD");
+        setSystemProperty("GCP_BUCKET");
+        setSystemProperty("GCP_PROJECT_ID");
+        setSystemProperty("GCP_STORAGE_CREDENTIALS_JSON");
 
-        // Spring Boot 애플리케이션 실행
         SpringApplication.run(FaniverseApplication.class, args);
+    }
+
+    private static void setSystemProperty(String key) {
+        String value = System.getenv(key); // 환경 변수 읽기
+        if (value != null) {
+            System.setProperty(key, value); // null이 아닌 경우만 시스템 속성 설정
+        }
     }
 }
