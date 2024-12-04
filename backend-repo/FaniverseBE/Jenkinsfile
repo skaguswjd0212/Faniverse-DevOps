@@ -21,11 +21,27 @@ pipeline {
             }
         }
 
+        stage('Load Environment Variables') {
+            when {
+                expression {
+                    return fileExists('backend-repo/FaniverseBE/.env')
+                }
+            }
+            steps {
+                script {
+                    echo "Loading environment variables from .env"
+                    // .env 파일이 존재하는 경우 로드
+                    sh 'set -o allexport && source backend-repo/FaniverseBE/.env && set +o allexport'
+                }
+            }
+        }
+	    
         stage('Build Backend') {
             steps {
                 dir('backend-repo/FaniverseBE') {
                     sh 'chmod +x gradlew'
                     sh './gradlew clean build'
+		    sh 'ls -al build/libs' // 빌드 결과 확인
                 }
             }
         }
@@ -38,6 +54,20 @@ pipeline {
             }
         }
 
+ 	stage('Run Docker Container Locally') {
+	    steps {
+                script {
+                    // 기존 컨테이너 삭제
+                    sh 'docker rm -f faniverse-backend-container || true'
+                    
+                    echo "Starting Docker container for backend..."
+                    // Docker 컨테이너 실행
+                    sh 'docker run -d --name faniverse-backend-container -p 8081:8080 faniverse-backend:latest'
+                    echo "Docker container for the backend is running successfully."
+                }
+            }
+        }
+	    
         stage('Push image') {
             steps {
                 script {
@@ -69,6 +99,7 @@ pipeline {
 		
 		// 파드 상태 확인
                 sh 'kubectl get pods'
+		sh 'kubectl get svc'
             }
         }
     }
