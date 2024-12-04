@@ -1,5 +1,6 @@
 package fantastic.faniverse;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -10,22 +11,16 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class FaniverseApplication {
 
-    public static void main(String[] args) {
-        // 환경 변수에서 값을 읽어 시스템 속성으로 설정
-        setSystemProperty("SPRING_DATASOURCE_URL");
-        setSystemProperty("SPRING_DATASOURCE_USERNAME");
-        setSystemProperty("SPRING_DATASOURCE_PASSWORD");
-        setSystemProperty("GCP_BUCKET");
-        setSystemProperty("GCP_PROJECT_ID");
-        setSystemProperty("GCP_STORAGE_CREDENTIALS_JSON");
+	public static void main(String[] args) {
 
-        SpringApplication.run(FaniverseApplication.class, args);
-    }
+		Dotenv dotenv = Dotenv.load();
+		System.setProperty("SPRING_DATASOURCE_URL", dotenv.get("SPRING_DATASOURCE_URL"));
+		System.setProperty("SPRING_DATASOURCE_USERNAME", dotenv.get("SPRING_DATASOURCE_USERNAME"));
+		System.setProperty("SPRING_DATASOURCE_PASSWORD", dotenv.get("SPRING_DATASOURCE_PASSWORD"));
+		System.setProperty("GCP_STORAGE_CREDENTIALS_JSON", dotenv.get("GCP_STORAGE_CREDENTIALS_JSON"));
+		System.setProperty("GCP_PROJECT_ID", dotenv.get("GCP_PROJECT_ID"));
+		System.setProperty("GCP_BUCKET", dotenv.get("GCP_BUCKET"));
 
-    private static void setSystemProperty(String key) {
-        String value = System.getenv(key); // 환경 변수 읽기
-        if (value != null) {
-            System.setProperty(key, value); // null이 아닌 경우만 시스템 속성 설정
-        }
-    }
+		SpringApplication.run(FaniverseApplication.class, args);
+	}
 }
