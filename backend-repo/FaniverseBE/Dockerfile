@@ -5,7 +5,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # .env 파일 복사
-COPY .env ./
+COPY .env /app/.env
 
 # 프로젝트의 JAR 파일 복사
 COPY build/libs/*.jar app.jar
