@@ -62,6 +62,7 @@ pipeline {
                     sh 'docker run -d --name faniverse-backend-container -p 8081:8080 faniverse_backend:latest'
 		    sh 'sleep 5'
 		    sh 'docker ps -f name=faniverse-backend-container'
+		    sh 'docker logs faniverse-backend-container'
                     echo "Docker container for the backend is running successfully."
                 }
             }
