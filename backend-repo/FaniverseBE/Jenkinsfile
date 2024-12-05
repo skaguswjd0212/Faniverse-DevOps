@@ -36,7 +36,8 @@ pipeline {
                 dir('backend-repo/FaniverseBE') {
                     // Docker 빌드 컨텍스트로 JAR 파일 복사
                     sh 'mkdir -p docker-build'
-                    sh 'cp build/libs/*.jar docker-build/app.jar'
+		    sh 'cp build/libs/faniverse-0.0.1-SNAPSHOT-plain.jar docker-build/app.jar'
+                    sh 'ls -al docker-build'
                 }
             }
         }
