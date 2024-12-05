@@ -1,16 +1,26 @@
 node {
     def app
-	
+    def jdk
+
     stage('Setup Environment') {
     echo "Setting up JDK environment for this Pipeline..."
-    env.JAVA_HOME = tool name: 'jdk21', type: 'jdk'
-    env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
-    env.PROJECT_ID = 'shaped-infusion-435600-i6'
-    env.CLUSTER_NAME = 'kube'
-    env.LOCATION = 'asia-northeast3-a'
-    env.CREDENTIALS_ID = 'gke'
+    jdk = tool name: 'jdk21', type: 'jdk'
+        
+    withEnv([
+            "JAVA_HOME=${jdk}",
+            "PATH=${jdk}/bin:${env.PATH}",
+            "PROJECT_ID=shaped-infusion-435600-i6",
+            "CLUSTER_NAME=kube",
+            "LOCATION=asia-northeast3-a",
+            "CREDENTIALS_ID=gke"
+    ]) {
+            echo "JAVA_HOME: ${env.JAVA_HOME}"
+            echo "PATH: ${env.PATH}"
+            echo "PROJECT_ID: ${env.PROJECT_ID}"
+            echo "CLUSTER_NAME: ${env.CLUSTER_NAME}"
+        }
     }
-    
+
     stage('Clone Repository') {
         echo "Cloning repository..."
         git branch: 'hyunjeong', url: 'https://github.com/skaguswjd0212/Faniverse-DevOps.git' 
