@@ -73,7 +73,7 @@ pipeline {
                     
                     echo "Starting Docker container for backend..."
                     // Docker 컨테이너 실행
-	            sh 'docker run -d --name faniverse-backend-container -p 8081:8080 faniverse_backend:latest'
+	            docker run -d --name faniverse-backend-container -p 8081:8080 --env-file /app/.env faniverse_backend:latest
 		    sh 'sleep 5'
 		    sh 'docker ps -f name=faniverse-backend-container'
 		    sh 'docker logs faniverse-backend-container'
