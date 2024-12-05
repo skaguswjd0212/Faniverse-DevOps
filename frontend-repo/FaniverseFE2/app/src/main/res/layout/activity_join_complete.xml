@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:text="Faniverse에 \n 오신걸 환영합니다!"
+        android:text="Faniverse에 \n 오신걸 환영합니다~!"
         android:textSize="30dp"
         android:textStyle="bold"
         android:textColor="#4F4F4F" />
