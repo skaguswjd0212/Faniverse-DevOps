@@ -30,23 +30,12 @@ pipeline {
                 }
             }
         }
-
-        stage('Prepare Docker Context') {
-            steps {
-                dir('backend-repo/FaniverseBE') {
-                    // Docker 빌드 컨텍스트로 JAR 파일 복사
-                    sh 'mkdir -p docker-build'
-		    sh 'cp build/libs/faniverse-0.0.1-SNAPSHOT.jar docker-build/app.jar'
-                    sh 'ls -al docker-build'
-                }
-            }
-        }
 	    
         stage('Build Image') {
             steps {
                 script {
-                    // JAR_FILE 인자를 설정하여 Docker 이미지 빌드
-                    app = docker.build("yr20211129/faniverse_backend:latest", "--build-arg JAR_FILE=docker-build/app.jar backend-repo/FaniverseBE")
+                    // Docker 이미지 빌드
+                    app = docker.build("yr20211129/faniverse_backend:latest", "backend-repo/FaniverseBE")
                 }
             }
         }
