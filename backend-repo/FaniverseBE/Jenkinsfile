@@ -109,7 +109,6 @@ pipeline {
             steps{
 		// 기존 Secret 삭제 후 적용
             	sh 'kubectl delete secret faniverse-secret || true'
-		sh 'kubectl create secret generic faniverse-secret --from-env-file=backend-repo/FaniverseBE/.env'
                 sh 'kubectl apply -f backend-repo/FaniverseBE/faniverse-secret.yml'
         	sh 'kubectl apply -f backend-repo/FaniverseBE/deploy.yml'
 		
