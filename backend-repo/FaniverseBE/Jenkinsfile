@@ -40,8 +40,8 @@ pipeline {
         stage('Create .env file') {
             steps {
                 script {
-                    // .env 파일 생성
-                    sh 'touch backend-repo/FaniverseBE/.env'
+                    // .env 파일 초기화
+                    sh 'echo "" > backend-repo/FaniverseBE/.env'
 
                     // 환경 변수 값을 .env 파일에 추가
                     sh """
