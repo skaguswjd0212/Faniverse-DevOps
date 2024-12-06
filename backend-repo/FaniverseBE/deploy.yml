@@ -21,7 +21,7 @@ spec:
               protocol: TCP
           envFrom:
             - secretRef: 
-                name: faniverse-secret
+                name: faniverse-secrets
 ---
 apiVersion: v1
 kind: Service
