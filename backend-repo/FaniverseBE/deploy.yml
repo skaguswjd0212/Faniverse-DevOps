@@ -5,12 +5,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: faniverse-backend
+      app: devops-spring-app
   replicas: 2
   template:
     metadata:
       labels:
-        app: faniverse-backend
+        app: devops-spring-app
     spec:
       containers: 
         - name: faniverse-con
@@ -34,4 +34,4 @@ spec:
       protocol: TCP
       targetPort: 8080
   selector:
-    app: faniverse-backend
+    app: devops-spring-app
