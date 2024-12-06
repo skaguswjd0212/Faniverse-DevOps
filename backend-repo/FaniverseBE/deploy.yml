@@ -6,13 +6,13 @@ spec:
   selector:
     matchLabels:
       app: devops-spring-app
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
         app: devops-spring-app
     spec:
-      containers:
+      containers: 
         - name: faniverse-con
           image: yr20211129/faniverse_backend:latest
           imagePullPolicy: Always
@@ -20,8 +20,8 @@ spec:
             - containerPort: 8080
               protocol: TCP
           envFrom:
-            - secretRef:
-                name: faniverse-secret
+            - secretRef: 
+                name: faniverse-secrets
 ---
 apiVersion: v1
 kind: Service
