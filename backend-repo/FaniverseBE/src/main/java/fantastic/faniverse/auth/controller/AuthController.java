@@ -52,11 +52,7 @@ public class AuthController {
         response.addCookie(cookie); // 쿠키 추가
 
         // User 객체를 LoginResponseDto로 변환
-        LoginResponseDto loginResponseDto = new LoginResponseDto(
-            user.getId(),
-            user.getEmail(),
-            user.getUsername() + " - CI/CD Deployed!"
-        );
+        LoginResponseDto loginResponseDto = new LoginResponseDto(user.getId(), user.getEmail(), user.getUsername());
 
         return ResponseEntity.ok(loginResponseDto);
     }
